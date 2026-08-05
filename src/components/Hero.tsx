@@ -29,6 +29,14 @@ function SoundIcon({ muted }: { muted: boolean }) {
   )
 }
 
+function FullscreenIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 10V5h5M14 5h5v5M19 14v5h-5M10 19H5v-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function Hero({ onPlaybackChange }: HeroProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
@@ -57,6 +65,31 @@ export function Hero({ onPlaybackChange }: HeroProps) {
     if (!video) return
     video.muted = !video.muted
     setMuted(video.muted)
+  }
+
+  const toggleFullscreen = async () => {
+    const video = videoRef.current
+    if (!video) return
+
+    const documentWithWebkit = document as Document & {
+      webkitFullscreenElement?: Element
+      webkitExitFullscreen?: () => Promise<void>
+    }
+    const videoWithWebkit = video as HTMLVideoElement & {
+      webkitRequestFullscreen?: () => Promise<void>
+      webkitEnterFullscreen?: () => void
+    }
+    const isFullscreen = Boolean(document.fullscreenElement || documentWithWebkit.webkitFullscreenElement)
+
+    if (isFullscreen) {
+      if (document.exitFullscreen) await document.exitFullscreen()
+      else await documentWithWebkit.webkitExitFullscreen?.()
+      return
+    }
+
+    if (video.requestFullscreen) await video.requestFullscreen()
+    else if (videoWithWebkit.webkitRequestFullscreen) await videoWithWebkit.webkitRequestFullscreen()
+    else videoWithWebkit.webkitEnterFullscreen?.()
   }
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
@@ -121,6 +154,9 @@ export function Hero({ onPlaybackChange }: HeroProps) {
           </div>
           <button className="showreel-control-button" type="button" onClick={toggleSound} aria-label={muted ? 'Включить звук' : 'Выключить звук'}>
             <SoundIcon muted={muted} />
+          </button>
+          <button className="showreel-control-button" type="button" onClick={toggleFullscreen} aria-label="Развернуть видео на весь экран">
+            <FullscreenIcon />
           </button>
         </div>
       </div>
