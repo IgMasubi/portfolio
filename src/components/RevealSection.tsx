@@ -6,6 +6,8 @@ interface RevealSectionProps extends PropsWithChildren {
 }
 
 const TOP_EXIT_DISTANCE = 0.58
+const MOBILE_TOP_EXIT_HOLD = 0.3
+const MOBILE_TOP_EXIT_DISTANCE = 0.5
 const BOTTOM_FADE_START = 0.42
 const BOTTOM_FADE_END = 0.9
 
@@ -21,8 +23,14 @@ export function RevealSection({ id, className = '', children }: RevealSectionPro
       frame = 0
       const rect = element.getBoundingClientRect()
       const viewport = window.innerHeight
+      const isMobile = window.matchMedia('(max-width: 760px)').matches
+      const exitedViewport = -rect.top / viewport
       const visibility = rect.top <= 0
-        ? 1 + rect.top / (viewport * TOP_EXIT_DISTANCE)
+        ? isMobile
+          ? exitedViewport <= MOBILE_TOP_EXIT_HOLD
+            ? 1
+            : 1 - (exitedViewport - MOBILE_TOP_EXIT_HOLD) / MOBILE_TOP_EXIT_DISTANCE
+          : 1 + rect.top / (viewport * TOP_EXIT_DISTANCE)
         : (viewport * BOTTOM_FADE_END - rect.top)
           / (viewport * (BOTTOM_FADE_END - BOTTOM_FADE_START))
       const clampedVisibility = Math.max(0, Math.min(1, visibility))

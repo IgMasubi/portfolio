@@ -1,7 +1,7 @@
 import { useRef, useState, type CSSProperties } from 'react'
 import { RevealSection } from './RevealSection'
 
-const showreelSource = new URL('../showreel/Showreel26.mp4', import.meta.url).href
+const showreelSource = new URL('../web-media/showreel/Showreel26.mp4', import.meta.url).href
 
 interface HeroProps {
   onPlaybackChange?: (playing: boolean) => void

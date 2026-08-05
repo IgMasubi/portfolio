@@ -498,30 +498,101 @@ img, video { display: block; max-width: 100%; }
   .showreel-timeline { width: min(48vw, 243px); }
   .video-controls { opacity: 1; transform: none; inset: auto 10px 10px; }
 
-  .portfolio-section { min-height: 100svh; padding: 96px 18px 48px; }
-  .portfolio-layout { display: flex; flex-direction: column; height: auto; }
-  .filters { height: auto; margin-bottom: 16px; padding-left: 0; }
-  .project-list { display: flex; gap: 8px; height: auto; overflow-x: auto; overflow-y: hidden; padding: 0 24px 10px 0; scroll-snap-type: x proximity; }
-  .project-card { flex: 0 0 176px; display: flex; flex-direction: column; align-items: flex-start; gap: 9px; min-height: auto; padding: 0; scroll-snap-align: start; }
-  .project-card img { width: 176px; height: 99px; }
-  .project-card-copy strong { font-size: 20px; }
-  .project-card.active { padding-left: 12px; }
-  .active-bar { top: 49.5px; height: 99px; }
-  .project-card .active-bar { left: 0; }
+  .portfolio-section {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 92px 18px 12px;
+    overflow: hidden;
+  }
+  .portfolio-layout { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+  .project-browser { flex: 0 0 auto; overflow: visible; }
+  .filters { height: 27px; margin-bottom: 10px; padding-left: 0; }
+  .project-list {
+    display: flex;
+    gap: 14px;
+    height: 108px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 20px 5px 0;
+    scroll-snap-type: x proximity;
+  }
+  .project-card {
+    flex: 0 0 148px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 148px;
+    height: 103px;
+    min-height: 0;
+    padding: 0;
+    scroll-snap-align: start;
+    transition: transform 300ms cubic-bezier(.2,.75,.2,1), opacity 180ms linear;
+  }
+  .project-card img { width: 148px; height: 83px; }
+  .project-card-copy { width: 100%; }
+  .project-card-copy strong { width: 100%; font-size: 16px; line-height: 1.1; }
+  .project-card-copy small { display: none; }
+  .project-card.active { padding-left: 0; transform: translateX(9px); }
+  .active-bar { top: 41.5px; height: 83px; }
+  .project-card .active-bar { left: -9px; }
   .project-scroll-track { display: none; }
-  .detail-transition { margin: 34px 0 0; }
-  .project-detail h2 { height: auto; font-size: 52px; }
-  .project-description { min-height: 0; padding: 8px 0 24px; font-size: 19px; }
-  .project-video { width: 100%; }
-  .project-gallery { gap: 8px; margin: 8px 0 0; overflow-x: auto; }
-  .project-gallery img, .project-gallery video { min-width: 180px; }
+  .detail-transition { flex: 1 1 auto; min-height: 0; margin: 12px 0 0; overflow: hidden; }
+  .project-detail { min-height: 0; overflow: hidden; }
+  .project-detail h2,
+  .project-description,
+  .project-video {
+    width: 100%;
+    margin-inline: 0;
+    text-align: left;
+  }
+  .project-detail h2 {
+    height: auto;
+    max-width: 100%;
+    font-size: clamp(30px, 9vw, 40px);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+  }
+  .project-description {
+    min-height: 0;
+    padding: 5px 0 10px;
+    font-size: clamp(12px, 3.5vw, 15px);
+    line-height: 1.28;
+  }
+  .project-video { flex: 0 1 auto; margin-block: 0; }
+  .project-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin: 7px 0 0;
+    overflow: hidden;
+  }
+  .project-gallery img,
+  .project-gallery video {
+    min-width: 0;
+    max-width: 100%;
+    border-radius: 7px;
+  }
   .project-detail--mantalis { --mantalis-content-width: 100%; }
-  .mantalis-media { grid-template-columns: 1fr; width: 100%; gap: 12px; margin-top: 8px; }
-  .mantalis-main-video { width: min(78vw, 360px); justify-self: center; }
-  .mantalis-side-media { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .project-detail--mantalis h2,
+  .project-detail--mantalis .project-description { width: 100%; margin-inline: 0; }
+  .mantalis-media {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    width: 100%;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .mantalis-main-video { width: 100%; justify-self: stretch; }
+  .mantalis-side-media { display: flex; gap: 8px; }
+  .mantalis-side-media img,
+  .mantalis-side-media video { min-width: 0; border-radius: 7px; }
   .project-detail--ortoline { --ortoline-content-width: 100%; }
+  .project-detail--ortoline h2,
+  .project-detail--ortoline .project-description,
+  .ortoline-media { width: 100%; margin-inline: 0; }
   .project-detail--ortoline .project-description { min-height: 0; }
-  .ortoline-media { gap: 8px; margin-top: 8px; }
+  .ortoline-media { gap: 7px; margin-top: 4px; }
+  .ortoline-video,
+  .ortoline-media > img { min-width: 0; border-radius: 7px; }
   .ortoline-video .video-controls span { display: none; }
 
   .about-section { padding: 100px 18px 56px; }
