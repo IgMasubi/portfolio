@@ -1,0 +1,8 @@
+node_modules
+.pnpm-store
+dist
+.reference
+.browser-profile*
+output
+*.tsbuildinfo
+*.local
