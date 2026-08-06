@@ -2,6 +2,7 @@ import { useRef, useState, type CSSProperties } from 'react'
 import { RevealSection } from './RevealSection'
 
 const showreelSource = new URL('../web-media/showreel/Showreel26.mp4', import.meta.url).href
+const showreelPoster = new URL('../web-media/showreel/showreelpv.webp', import.meta.url).href
 
 interface HeroProps {
   onPlaybackChange?: (playing: boolean) => void
@@ -102,13 +103,11 @@ export function Hero({ onPlaybackChange }: HeroProps) {
           ref={videoRef}
           className="showreel-video"
           src={showreelSource}
+          poster={showreelPoster}
           preload="auto"
           muted={muted}
           playsInline
           onClick={togglePlay}
-          onLoadedData={(event) => {
-            if (event.currentTarget.currentTime === 0) event.currentTarget.currentTime = 0.01
-          }}
           onLoadedMetadata={(event) => setDuration(event.currentTarget.duration || 0)}
           onDurationChange={(event) => setDuration(event.currentTarget.duration || 0)}
           onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
