@@ -1,5 +1,7 @@
 import { RevealSection } from './RevealSection'
 
+const portraitSource = new URL('../showreel/photo.png', import.meta.url).href
+
 export function About() {
   return (
     <RevealSection id="info" className="about-section">
@@ -7,7 +9,7 @@ export function About() {
         <div className="about-content">
           <h2>Обо мне</h2>
           <div className="about-body">
-            <img className="portrait" src={`${import.meta.env.BASE_URL}media/portrait.svg`} alt="Портрет Игната Кобринюка" />
+            <img className="portrait" src={portraitSource} alt="Портрет Игната Кобринюка" />
             <p className="bio">
               Моушн-дизайнер и 3D-дженералист.<br />
               Создаю 2D/3D-визуал, CGI и анимацию для рекламы,<br />
